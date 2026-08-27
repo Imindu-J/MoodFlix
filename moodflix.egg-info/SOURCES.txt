@@ -6,8 +6,14 @@ app/api/__init__.py
 app/api/routes/__init__.py
 app/api/routes/health.py
 app/core/__init__.py
+app/core/config.py
+app/db/__init__.py
 app/db/base.py
 app/db/session.py
+app/models/__init__.py
+app/models/association.py
+app/models/genre.py
+app/models/keyword.py
 app/models/movie.py
 moodflix.egg-info/PKG-INFO
 moodflix.egg-info/SOURCES.txt

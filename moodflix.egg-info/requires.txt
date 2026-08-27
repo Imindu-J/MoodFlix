@@ -3,9 +3,9 @@ pydantic-settings<3.0,>=2.7
 alembic<2.0,>=1.14
 psycopg[binary]<4.0,>=3.2
 sqlalchemy<3.0,>=2.0
+httpx<1.0,>=0.28
 
 [dev]
-httpx<1.0,>=0.28
 pytest<10.0,>=8.3
 pytest-cov<8.0,>=6.0
 ruff<1.0,>=0.9

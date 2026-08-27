@@ -119,15 +119,15 @@ The recommendation engine uses a hybrid retrieval approach:
 ### Phase 4 — Database foundation
 
 - [x] Run PostgreSQL with pgvector through Docker Compose.
-- [ ] Add SQLAlchemy and the PostgreSQL driver.
-- [ ] Configure database sessions.
-- [ ] Configure Alembic migrations.
-- [ ] Enable the pgvector extension through a migration.
-- [ ] Create the movie database model.
+- [x] Add SQLAlchemy and the PostgreSQL driver.
+- [x] Configure database sessions.
+- [x] Configure Alembic migrations.
+- [x] Enable the pgvector extension through a migration.
+- [x] Create the movie database model.
 
 ### Phase 5 — Movie data ingestion
 
-- [ ] Select a small movie dataset or API.
+- [x] Select a small movie dataset or API.
 - [ ] Import movie metadata.
 - [ ] Validate and clean imported records.
 - [ ] Store genres, runtime, language, ratings, and age ratings.

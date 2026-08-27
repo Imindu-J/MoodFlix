@@ -9,8 +9,8 @@ Requires-Dist: pydantic-settings<3.0,>=2.7
 Requires-Dist: alembic<2.0,>=1.14
 Requires-Dist: psycopg[binary]<4.0,>=3.2
 Requires-Dist: sqlalchemy<3.0,>=2.0
+Requires-Dist: httpx<1.0,>=0.28
 Provides-Extra: dev
-Requires-Dist: httpx<1.0,>=0.28; extra == "dev"
 Requires-Dist: pytest<10.0,>=8.3; extra == "dev"
 Requires-Dist: pytest-cov<8.0,>=6.0; extra == "dev"
 Requires-Dist: ruff<1.0,>=0.9; extra == "dev"
@@ -136,11 +136,11 @@ The recommendation engine uses a hybrid retrieval approach:
 ### Phase 4 — Database foundation
 
 - [x] Run PostgreSQL with pgvector through Docker Compose.
-- [ ] Add SQLAlchemy and the PostgreSQL driver.
-- [ ] Configure database sessions.
-- [ ] Configure Alembic migrations.
-- [ ] Enable the pgvector extension through a migration.
-- [ ] Create the movie database model.
+- [x] Add SQLAlchemy and the PostgreSQL driver.
+- [x] Configure database sessions.
+- [x] Configure Alembic migrations.
+- [x] Enable the pgvector extension through a migration.
+- [x] Create the movie database model.
 
 ### Phase 5 — Movie data ingestion
 
