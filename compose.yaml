@@ -1,0 +1,19 @@
+services:
+  database:
+    image: pgvector/pgvector:0.8.6-pg16
+    environment:
+      POSTGRES_DB: moodflix_db
+      POSTGRES_USER: moodflix
+      POSTGRES_PASSWORD: dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - moodflix_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moodflix -d moodflix"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  moodflix_postgres_data:

@@ -1,3 +1,20 @@
+Metadata-Version: 2.4
+Name: moodflix
+Version: 0.1.0
+Summary: A conversational movie recommendation system with WhatsApp integration.
+Requires-Python: <3.15,>=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi[standard-no-fastapi-cloud-cli]<1.0,>=0.115
+Requires-Dist: pydantic-settings<3.0,>=2.7
+Requires-Dist: alembic<2.0,>=1.14
+Requires-Dist: psycopg[binary]<4.0,>=3.2
+Requires-Dist: sqlalchemy<3.0,>=2.0
+Provides-Extra: dev
+Requires-Dist: httpx<1.0,>=0.28; extra == "dev"
+Requires-Dist: pytest<10.0,>=8.3; extra == "dev"
+Requires-Dist: pytest-cov<8.0,>=6.0; extra == "dev"
+Requires-Dist: ruff<1.0,>=0.9; extra == "dev"
+
 # MoodFlix
 
 MoodFlix is a conversational movie recommendation system that helps users discover
