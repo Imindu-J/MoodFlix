@@ -135,10 +135,10 @@ The recommendation engine uses a hybrid retrieval approach:
 
 ### Phase 6 — Embeddings
 
-- [ ] Add Sentence Transformers.
-- [ ] Generate embeddings for searchable descriptions.
-- [ ] Store embeddings in PostgreSQL.
-- [ ] Add a vector similarity index.
+- [x] Add Sentence Transformers.
+- [x] Generate embeddings for searchable descriptions.
+- [x] Store embeddings in PostgreSQL.
+- [x] Add a vector similarity index.
 
 ### Phase 7 — Recommendation engine
 
