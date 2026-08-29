@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 
 from sqlalchemy import CheckConstraint, DateTime, Float, Integer, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from pgvector.sqlalchemy import VECTOR
 
 from app.db.base import Base
 from app.models.association import movie_genres, movie_keywords
@@ -57,6 +58,11 @@ class Movie(Base):
         DateTime(timezone=True),
         server_default=func.now(),
         onupdate=func.now(),
+    )
+
+    embedding: Mapped[list[float] | None] = mapped_column(
+        VECTOR(384),
+        nullable=True,
     )
 
     genres: Mapped[list["Genre"]] = relationship(

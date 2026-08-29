@@ -15,7 +15,7 @@ class Keyword(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     tmdb_id: Mapped[int] = mapped_column(Integer, unique=True, index=True)
-    name: Mapped[str] = mapped_column(String(255), unique=True)
+    name: Mapped[str] = mapped_column(String(255))
 
     movies: Mapped[list["Movie"]] = relationship(
         secondary=movie_keywords,
