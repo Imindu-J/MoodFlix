@@ -58,7 +58,7 @@ class TmdbClient:
         data = self._get(
             f"movie/{movie_id}",
             params={
-                "append_to_response": "keywords, release_dates",
+                "append_to_response": "keywords,release_dates",
                 "language": "en-US",
             },
         )

@@ -4,6 +4,8 @@ alembic<2.0,>=1.14
 psycopg[binary]<4.0,>=3.2
 sqlalchemy<3.0,>=2.0
 httpx<1.0,>=0.28
+pgvector<1.0,>=0.5
+sentence-transformers<7.0,>=6.0
 
 [dev]
 pytest<10.0,>=8.3

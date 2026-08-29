@@ -5,6 +5,8 @@ app/main.py
 app/api/__init__.py
 app/api/routes/__init__.py
 app/api/routes/health.py
+app/clients/__init__.py
+app/clients/tmdb.py
 app/core/__init__.py
 app/core/config.py
 app/db/__init__.py
@@ -15,6 +17,12 @@ app/models/association.py
 app/models/genre.py
 app/models/keyword.py
 app/models/movie.py
+app/schemas/__init__.py
+app/schemas/movie_import.py
+app/schemas/tmdb.py
+app/services/__init__.py
+app/services/movie_normalizer.py
+app/services/movie_repository.py
 moodflix.egg-info/PKG-INFO
 moodflix.egg-info/SOURCES.txt
 moodflix.egg-info/dependency_links.txt

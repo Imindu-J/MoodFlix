@@ -128,10 +128,10 @@ The recommendation engine uses a hybrid retrieval approach:
 ### Phase 5 — Movie data ingestion
 
 - [x] Select a small movie dataset or API.
-- [ ] Import movie metadata.
-- [ ] Validate and clean imported records.
-- [ ] Store genres, runtime, language, ratings, and age ratings.
-- [ ] Generate searchable movie descriptions.
+- [x] Import movie metadata.
+- [x] Validate and clean imported records.
+- [x] Store genres, runtime, language, ratings, and age ratings.
+- [x] Generate searchable movie descriptions.
 
 ### Phase 6 — Embeddings
 
@@ -186,4 +186,11 @@ The recommendation engine uses a hybrid retrieval approach:
 - [ ] Document local setup and API usage.
 - [ ] Prepare production Docker configuration.
 - [ ] Document deployment requirements.
+
+
+### To improve:
+To increase movie retrieval and insertion speed:
+- Fetching details with bounded concurrency, perhaps five requests - simultaneously.
+- Keeping database writes sequential.
+- Committing movies in batches instead of committing every movie.
 
