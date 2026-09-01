@@ -142,8 +142,8 @@ The recommendation engine uses a hybrid retrieval approach:
 
 ### Phase 7 — Recommendation engine
 
-- [ ] Implement metadata filters.
-- [ ] Implement semantic vector search.
+- [x] Implement metadata filters.
+- [x] Implement semantic vector search.
 - [ ] Combine similarity and metadata scores.
 - [ ] Return three to five ranked recommendations.
 - [ ] Support “more like this” searches.

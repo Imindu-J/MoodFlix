@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session, selectinload
 
 from app.models.genre import Genre
 from app.models.movie import Movie
-from app.schemas.recommendation import RecommendationFilters, RecommendationRequest
+from app.schemas.recommendation import RecommendationFilters, RecommendationRequest, RecommendationItem, RecommendationResponse
 from app.services.embedding_service import EmbeddingService
 
 
@@ -132,4 +132,83 @@ class RecommendationService:
     def _similarity_from_distance(distance: float) -> float:
         similarity = 1 - float(distance)
         return max(-1.0, min(1.0, similarity))
+    
+
+    def recommend(
+            self,
+            session: Session,
+            request: RecommendationRequest,
+    ) -> RecommendationResponse:
+        candidates = self.find_candidates(session, request)
+        ranked_candidates = sorted(
+            candidates,
+            key=self._hybrid_score,
+            reverse=True,
+        )
+
+        recommendations = [
+            self._to_recommendation_item(candidate)
+            for candidate in ranked_candidates[:request.limit]
+        ]
+
+        return RecommendationResponse(recommendations=recommendations)
+
+
+    @classmethod
+    def _hybrid_score(
+        cls,
+        candidate: RecommendationCandidate,
+    ) -> float:
+        semantic_score = max(0.0, candidate.semantic_similarity)
+        quality_score = cls._quality_score(candidate.movie)
+
+        return (semantic_score *0.90) + (quality_score * 0.10)
+
+    @staticmethod
+    def _quality_score(movie: Movie) -> float:
+        if movie.rating is None:
+            return 0.0
+
+        vote_count = movie.vote_count or 0
+        prior_rating = 6.5
+        prior_vote_count = 500
+
+        weighted_rating = (
+            (vote_count / (vote_count + prior_vote_count))*movie.rating 
+            +(prior_rating/(vote_count + prior_vote_count))*prior_rating
+        )
+
+        return weighted_rating / 10
+
+    @classmethod
+    def _to_recommendation_item(
+        cls, 
+        candidate: RecommendationCandidate,        
+    ) -> RecommendationItem:
+        movie = candidate.movie
+
+        return RecommendationItem(
+            tmdb_id=movie.tmdb_id,
+            title=movie.title,
+            overview=movie.overview,
+            release_year=movie.release_year,
+            runtime_minutes=movie.runtime_minutes,
+            original_language=movie.original_language,
+            rating=movie.rating,
+            age_rating=movie.age_rating,
+            certification_country=movie.certification_country,
+            poster_path=movie.poster_path,
+            genres=sorted(
+                genre.name
+                for genre in movie.genres
+            ),
+            semantic_similarity=round(
+                candidate.semantic_similarity,
+                6,
+            ),
+            score=round(
+                cls._hybrid_score(candidate),
+                6,
+            ),
+        )
 
