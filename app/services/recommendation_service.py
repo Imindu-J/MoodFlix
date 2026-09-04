@@ -4,7 +4,13 @@ from sqlalchemy.orm import Session, selectinload
 
 from app.models.genre import Genre
 from app.models.movie import Movie
-from app.schemas.recommendation import RecommendationFilters, RecommendationRequest, RecommendationItem, RecommendationResponse
+from app.schemas.recommendation import (
+    RecommendationFilters,
+    RecommendationRequest,
+    RecommendationItem,
+    RecommendationResponse,
+    SimilarMoviesRequest,
+)
 from app.services.embedding_service import EmbeddingService
 
 
@@ -12,6 +18,13 @@ from app.services.embedding_service import EmbeddingService
 class RecommendationCandidate:
     movie: Movie
     semantic_similarity: float
+
+
+class MovieNotFound(LookupError):
+    pass
+
+class MovieEmbeddingMissingError(RuntimeError):
+    pass
 
 
 class RecommendationService:
@@ -140,18 +153,8 @@ class RecommendationService:
             request: RecommendationRequest,
     ) -> RecommendationResponse:
         candidates = self.find_candidates(session, request)
-        ranked_candidates = sorted(
-            candidates,
-            key=self._hybrid_score,
-            reverse=True,
-        )
 
-        recommendations = [
-            self._to_recommendation_item(candidate)
-            for candidate in ranked_candidates[:request.limit]
-        ]
-
-        return RecommendationResponse(recommendations=recommendations)
+        return self._rank_candidates(candidates, limit=request.limit)
 
 
     @classmethod
@@ -212,3 +215,50 @@ class RecommendationService:
             ),
         )
 
+    def _rank_candidates(
+            self,
+            candidates: list[RecommendationCandidate],
+            *,
+            limit: int,
+    ) -> RecommendationResponse:
+        ranked_candidates = sorted(
+            candidates,
+            key=self._hybrid_score,
+            reverse=True,
+            )
+        
+        recommendations = [
+            self._to_recommendation_item(candidate)
+            for candidate in ranked_candidates[:limit]
+        ]
+
+        return RecommendationResponse(recommendations=recommendations)
+
+    def recommend_similar(
+            self,
+            session: Session,
+            tmdb_id: int,
+            request: SimilarMoviesRequest,
+    ) -> RecommendationResponse:
+        source_movie = session.scalar(
+            select(Movie).where(Movie.tmdb_id == tmdb_id)
+        )
+
+        if source_movie is None:
+            raise ModuleNotFoundError(f"Movie with TMDB ID {tmdb_id} was not found.")
+
+        if source_movie.embedding is None:
+            raise MovieEmbeddingMissingError(f"Movie {source_movie.title} has no embedding.")
+
+        excluded_tmdb_ids = set(request.exclude_tmdb_ids)
+        excluded_tmdb_ids.add(source_movie.tmdb_id)
+
+        candidates = self._find_candidates_by_embedding(
+            session=session,
+            query_embedding=source_movie.embedding,
+            filters=request.filters,
+            exclude_tmdb_ids=list(excluded_tmdb_ids),
+            candidate_limit=max(request.limit * 10, 50),
+        )
+
+        return self._rank_candidates(candidates, limit=request.limit)
