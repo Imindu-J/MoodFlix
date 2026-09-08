@@ -144,9 +144,9 @@ The recommendation engine uses a hybrid retrieval approach:
 
 - [x] Implement metadata filters.
 - [x] Implement semantic vector search.
-- [ ] Combine similarity and metadata scores.
-- [ ] Return three to five ranked recommendations.
-- [ ] Support “more like this” searches.
+- [x] Combine similarity and metadata scores.
+- [x] Return three to five ranked recommendations.
+- [x] Support “more like this” searches.
 
 ### Phase 8 — Natural-language preference extraction
 
