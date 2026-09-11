@@ -150,7 +150,7 @@ The recommendation engine uses a hybrid retrieval approach:
 
 ### Phase 8 — Natural-language preference extraction
 
-- [ ] Define a structured preference model.
+- [x] Define a structured preference model.
 - [ ] Connect a cost-effective hosted language model.
 - [ ] Convert user messages into validated preferences.
 - [ ] Handle missing or ambiguous preferences safely.
